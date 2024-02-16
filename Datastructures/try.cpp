@@ -2,12 +2,17 @@
 #include <stdexcept>
 
 template <typename T>
+class LinkedList;
+
+template <typename T>
 class Node
 {
-public:
+private:
     T data;
     Node* next = nullptr;
 
+    friend class LinkedList<T>;
+public:
     Node(T value) : data(value), next(nullptr) {}
 };
 
