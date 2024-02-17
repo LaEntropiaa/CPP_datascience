@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 template <typename T>
 class LinkedList;
@@ -24,6 +25,14 @@ private:
 
 public:
     LinkedList() : head(nullptr) {}
+
+    LinkedList(const std::vector<T>& values): head(nullptr)
+    {
+        for (T i : values)
+        {
+            append(i);
+        }
+    }
 
     void append(T data)
     {
@@ -206,20 +215,31 @@ public:
         }
         return times;
     }
+
+    int find(T data)
+    {
+        Node<T>* current_node = head;
+        int current_index = 0;
+        while (current_node->data != data)
+        {
+            if (current_node == nullptr or current_node->next == nullptr)
+            {
+                return -1;
+            }
+            current_node = current_node->next;
+            current_index++;
+        }
+        return current_index;
+    }
 };
 
 
 int main()
 {
-    LinkedList<int> list;
-    list.append(23);
-    list.append(45);
-    list.append(33);
-    list.append(43);
-    list.append(45);
-    list.append(45);
-    list.append(41);
-    std::cout << list.count(45);
+    std::vector<int> vect = { 1,2,3,4,5,6,7,8 };
+    LinkedList<int> list(vect);
+    list.print();
+    
 
     return 0;
 }
