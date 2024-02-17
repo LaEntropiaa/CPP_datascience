@@ -99,33 +99,89 @@ public:
         int current_index = 0;
         Node<T>* current_node = head;
         try {
-        if (index < 0)
-        {
-            throw std::runtime_error("LinkedList::get doesn't support negative index");
-        }
-        while (current_index < index)
-        {
-            if (current_node == nullptr or current_node->next == nullptr)
+            if (index < 0)
             {
-                throw std::runtime_error("Index out of range");
+                throw std::runtime_error("LinkedList::get doesn't support negative index");
             }
-            current_node = current_node->next;
-            current_index++;
-        }
-        return current_node->data;
-        }catch (const std::runtime_error& e){
+            while (current_index < index)
+            {
+                if (current_node == nullptr or current_node->next == nullptr)
+                {
+                    throw std::runtime_error("Index out of range");
+                }
+                current_node = current_node->next;
+                current_index++;
+            }
+            return current_node->data;
+        }catch (const std::runtime_error& e) {
             std::cerr << "Error: " << e.what() << std::endl;
-            std::cerr << "File: " << __FILE__ << std::endl; 
-            std::cerr << "Line: " << __LINE__ << std::endl;   
+            std::cerr << "File: " << __FILE__ << std::endl;
+            std::cerr << "Line: " << __LINE__ << std::endl;
             std::exit(EXIT_FAILURE);
-            
+        }
+    }
+
+    T pop_head()
+    {
+        try {
+            if (head == nullptr)
+            {
+                throw std::runtime_error("Empty llist");
+            }
+        }catch (const std::runtime_error& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            std::cerr << "File: " << __FILE__ << std::endl;
+            std::cerr << "Line: " << __LINE__ << std::endl;
+            std::exit(EXIT_FAILURE);
         }
 
 
+        Node<T>* temp_node = head;
+        T temp_data = head->data;
+        head = head->next;
+        delete temp_node;
+        return temp_data;
+        
+    }
+
+    T pop_tail()
+    {
+        try {
+            if (head == nullptr)
+            {
+                throw std::runtime_error("Empty llist");
+            }
+        }
+        catch (const std::runtime_error& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+            std::cerr << "File: " << __FILE__ << std::endl;
+            std::cerr << "Line: " << __LINE__ << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
+        if (head->next == nullptr) 
+        {
+            T temp_data = head->data;
+            delete head;
+            head = nullptr;
+            return temp_data;
+        }
+        Node<T>* current_node = head;
+        while (current_node->next->next != nullptr)
+        {
+            current_node = current_node->next;
+        }
+        T temp_data = current_node->next->data;
+        delete current_node->next;
+        current_node->next = nullptr;
+        return temp_data;
     }
 
     int lenght()
     {
+        if (head == nullptr)
+        {
+            return 0;
+        }
         int lenght = 1;
         Node<T>* current_node = head;
         while (current_node != nullptr && current_node->next != nullptr)
@@ -141,15 +197,7 @@ public:
 int main()
 {
     LinkedList<int> list;
-    list.append(17);
-    list.append(31);
-    list.append(40);
-    list.append(23);
-    list.pre_append(55);
-    list.insert(56, 4);
-
-    list.print();
-    std::cout << list.get(6);
+    std::cout << list.pop_head();
 
     return 0;
 }
