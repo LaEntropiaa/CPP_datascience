@@ -191,13 +191,35 @@ public:
         }
         return lenght;
     }
+
+    int count(T data)
+    {
+        int times = 0;
+        Node<T>* current_node = head;
+        while (current_node != nullptr && current_node->next != nullptr)
+        {
+            if (current_node->data == data)
+            {
+                times++;
+            }
+            current_node = current_node->next;
+        }
+        return times;
+    }
 };
 
 
 int main()
 {
     LinkedList<int> list;
-    std::cout << list.pop_head();
+    list.append(23);
+    list.append(45);
+    list.append(33);
+    list.append(43);
+    list.append(45);
+    list.append(45);
+    list.append(41);
+    std::cout << list.count(45);
 
     return 0;
 }
