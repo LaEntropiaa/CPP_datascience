@@ -26,12 +26,25 @@ private:
 public:
     LinkedList() : head(nullptr) {}
 
-    LinkedList(const std::vector<T>& values): head(nullptr)
+    LinkedList(const std::vector<T>& values) : head(nullptr)
     {
         for (T i : values)
         {
             append(i);
         }
+    }
+
+    ~LinkedList()
+    {
+        Node<T>* current = head;
+        Node<T>* next;
+
+        while (current != nullptr) {
+            next = current->next;
+            delete current;
+            current = next;
+        }
+        head = nullptr;
     }
 
     void append(T data)
@@ -51,7 +64,7 @@ public:
 
     void pre_append(T data)
     {
-        Node<T>* new_node =  new Node<T>(data);
+        Node<T>* new_node = new Node<T>(data);
         new_node->next = head;
         head = new_node;
     }
@@ -61,31 +74,32 @@ public:
         Node<T>* new_node = new Node<T>(data);
         Node<T>* current_node = head;
         int current_index = 0;
-        try{
-        if (current_index < 0)
-        {
-            throw std::runtime_error("LinkedList Insert method doesn't support negative index.");
-        }
-        while (current_index < index)
-        {
-            if (current_node == nullptr or current_node->next == nullptr)
+        try {
+            if (current_index < 0)
             {
-                throw std::runtime_error("Index out of range");
+                throw std::runtime_error("LinkedList Insert method doesn't support negative index.");
             }
-            current_node = current_node->next;
-            current_index++;
+            while (current_index < index)
+            {
+                if (current_node == nullptr or current_node->next == nullptr)
+                {
+                    throw std::runtime_error("Index out of range");
+                }
+                current_node = current_node->next;
+                current_index++;
+            }
+            Node<T>* next_node = current_node->next;
+            current_node->next = new_node;
+            new_node->next = next_node;
         }
-        Node<T>* next_node = current_node->next;
-        current_node->next = new_node;
-        new_node->next = next_node;
-        }catch (const std::runtime_error& e) {
+        catch (const std::runtime_error& e) {
             std::cerr << "Error: " << e.what() << std::endl;
             std::cerr << "File: " << __FILE__ << std::endl;
             std::cerr << "Line: " << __LINE__ << std::endl;
             std::exit(EXIT_FAILURE);
         }
     }
- 
+
     void print()
     {
         if (head == nullptr)
@@ -122,7 +136,8 @@ public:
                 current_index++;
             }
             return current_node->data;
-        }catch (const std::runtime_error& e) {
+        }
+        catch (const std::runtime_error& e) {
             std::cerr << "Error: " << e.what() << std::endl;
             std::cerr << "File: " << __FILE__ << std::endl;
             std::cerr << "Line: " << __LINE__ << std::endl;
@@ -137,7 +152,8 @@ public:
             {
                 throw std::runtime_error("Empty llist");
             }
-        }catch (const std::runtime_error& e) {
+        }
+        catch (const std::runtime_error& e) {
             std::cerr << "Error: " << e.what() << std::endl;
             std::cerr << "File: " << __FILE__ << std::endl;
             std::cerr << "Line: " << __LINE__ << std::endl;
@@ -150,7 +166,7 @@ public:
         head = head->next;
         delete temp_node;
         return temp_data;
-        
+
     }
 
     T pop_tail()
@@ -167,7 +183,7 @@ public:
             std::cerr << "Line: " << __LINE__ << std::endl;
             std::exit(EXIT_FAILURE);
         }
-        if (head->next == nullptr) 
+        if (head->next == nullptr)
         {
             T temp_data = head->data;
             delete head;
@@ -231,15 +247,33 @@ public:
         }
         return current_index;
     }
+
+    class Iterator {
+    private:
+        Node<T>* current;
+
+    public:
+        Iterator(Node<T>* node) : current(node) {}
+
+        T& operator*() {
+            return current->data;
+        }
+
+        Iterator& operator++() {
+            current = current->next;
+            return *this;
+        }
+
+        bool operator!=(const Iterator& other) const {
+            return current != other.current;
+        }
+    };
+
+    Iterator begin() {
+        return Iterator(head);
+    }
+
+    Iterator end() {
+        return Iterator(nullptr);
+    }
 };
-
-
-int main()
-{
-    std::vector<int> vect = { 1,2,3,4,5,6,7,8 };
-    LinkedList<int> list(vect);
-    list.print();
-    
-
-    return 0;
-}
