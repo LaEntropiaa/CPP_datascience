@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <string>
 #include <math.h>
+#include <limits>
 
 
 template <class T>
@@ -61,7 +62,7 @@ private:
         {
             return;
         }
-        int parent = (index - 1) / 2;
+        size_t parent = (index - 1) / 2;
         if (this->heap[index] < this->heap[parent])
         {
             std::swap(this->heap[index], this->heap[parent]);
@@ -75,7 +76,6 @@ public:
     {
         this->heap.push_back(data);
         this->sift_up(this->heap.size() - 1);
-        std::cout << this->heap.size() << "\n";
     }
 
     T get(int index)
@@ -96,11 +96,43 @@ public:
         }
     }
 
-    int size()
+    size_t size()
     {
         return this->heap.size();
     }
+
+    void push(T data)
+    {
+        if (this->heap.size() < 1)
+        {
+            return;
+        }
+        this->heap[0] = data;
+        sift_down();
+        return;
+    }
+
+    T pop()
+    {
+        if (this->heap.size() < 1)
+        {
+            return std::numeric_limits<T>::max();
+        }
+        else if (this->heap.size() == 1)
+        {
+            T data = heap[0];
+            this->heap.pop_back();
+            return data;
+        }
+        T data = this->heap[0];
+        this->heap[0] = this->heap[this->heap.size() - 1];
+        this->heap.pop_back();
+        sift_down();
+        return data;
+    }
 };
+
+
 
 template <class T>
 std::ostream& operator << (std::ostream& out, MinHeap<T> heap)

@@ -12,7 +12,10 @@ int main()
     heap.append(11);
     heap.append(13);
 
-    std::cout << heap ;
+    heap.push(42);
+    std::cout << heap <<"\n";
+    std::cout << heap.pop() << "\n";
+    std::cout << heap << "\n";
   
     return 0;
 }
