@@ -14,7 +14,7 @@ int main()
 
     heap.push(42);
     std::cout << heap <<"\n";
-    std::cout << heap.pop() << "\n";
+    heap.replace(9, 5);
     std::cout << heap << "\n";
   
     return 0;

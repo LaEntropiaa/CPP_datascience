@@ -56,7 +56,7 @@ private:
         return;
     }
 
-    void sift_up(size_t index)
+    void sift_up(int index)
     {
         if (index < 1)
         {
@@ -129,6 +129,18 @@ public:
         this->heap.pop_back();
         sift_down();
         return data;
+    }
+
+    void replace(T data, int index)
+    {
+        if (this->heap.size() < 1)
+        {
+            return;
+        }
+        this->heap[index] = data;
+        sift_down(index);
+        sift_up(index);
+        return;
     }
 };
 
