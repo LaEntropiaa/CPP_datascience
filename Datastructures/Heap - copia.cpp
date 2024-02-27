@@ -68,7 +68,7 @@ template <class T>
 void MinHeap<T>::append(T data)
 {
     this->heap.push_back(data);
-    this->sift_up();
+    this->sift_up(this->heap.size() - 1);
 }
 
 template <class T>

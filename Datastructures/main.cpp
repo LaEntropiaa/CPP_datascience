@@ -1,5 +1,4 @@
 #include "Heap.h"
-#include <iostream>
 
 int main()
 {
@@ -10,7 +9,10 @@ int main()
     heap.append(89);
     heap.append(65);
     heap.append(45);
-    std::cout << heap;
+    heap.append(11);
+    heap.append(13);
+
+    std::cout << heap ;
   
     return 0;
 }

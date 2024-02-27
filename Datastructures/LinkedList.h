@@ -1,3 +1,6 @@
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -277,3 +280,4 @@ public:
         return Iterator(nullptr);
     }
 };
+#endif
