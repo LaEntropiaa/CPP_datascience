@@ -137,13 +137,72 @@ public:
         {
             return;
         }
+        try {
+            if (index < this->heap.size() - 1)
+            {
+                throw std::runtime_error("Index out of range");
+            }
+        }
+        catch (const std::runtime_error& e)
+        {
+            std::cerr << "Error: " << e.what() << std::endl;
+            std::cerr << "File: " << __FILE__ << std::endl;
+            std::cerr << "Line: " << __LINE__ << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
         this->heap[index] = data;
         sift_down(index);
         sift_up(index);
         return;
     }
-};
 
+    void erase(int index)
+    {
+        if (this->heap.size() < 1)
+        {
+            return;
+        }
+        try {
+            if (index < this->heap.size() - 1)
+            {
+                throw std::runtime_error("Index out of range");
+            }
+        }
+        catch (const std::runtime_error& e)
+        {
+            std::cerr << "Error: " << e.what() << std::endl;
+            std::cerr << "File: " << __FILE__ << std::endl;
+            std::cerr << "Line: " << __LINE__ << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
+        this->heap[index] = pop();
+        sift_down(index);
+    }
+
+    T peek()
+    {
+        if (this->heap.size() < 1)
+        {
+            return std::numeric_limits<T>::max();
+        }
+        return this->heap[0];
+    }
+
+    std::vector<T> heapsort()
+    {
+        if (this->heap.size() < 1)
+        {
+            std::vector<T> list = {};
+            return list;
+        }
+        std::vector<T> list;
+        while (this->heap.size() > 0)
+        {
+            list.push_back(pop());
+        }
+        return list;
+    }
+};
 
 
 template <class T>
@@ -151,7 +210,7 @@ std::ostream& operator << (std::ostream& out, MinHeap<T> heap)
 {
     if (heap.size() < 1)
     {
-        out << "";
+        out << "NULL";
         return out;
     }
     out << heap.get(0) << "\n";

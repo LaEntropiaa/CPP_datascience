@@ -1,4 +1,5 @@
 #include "Heap.h"
+#include <vector>
 
 int main()
 {
@@ -12,10 +13,13 @@ int main()
     heap.append(11);
     heap.append(13);
 
-    heap.push(42);
     std::cout << heap <<"\n";
-    heap.replace(9, 5);
-    std::cout << heap << "\n";
+    std::vector<int> list = heap.heapsort();
+    for (int i : list)
+    {
+        std::cout << i << "-";
+    }
+    std::cout << "\n" << heap;
   
     return 0;
 }
