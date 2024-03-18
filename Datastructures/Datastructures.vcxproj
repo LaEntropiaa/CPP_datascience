@@ -131,9 +131,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Errors.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Errors.h" />
+    <ClInclude Include="Hash.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Heap.h" />
   </ItemGroup>

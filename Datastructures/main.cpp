@@ -1,25 +1,23 @@
-#include "Heap.h"
+#include <array>
+#include <iostream>
+#include <utility>
 #include <vector>
+#include "Errors.h"
 
 int main()
 {
-    MinHeap<int> heap;
-    heap.append(88);
-    heap.append(36);
-    heap.append(22);
-    heap.append(89);
-    heap.append(65);
-    heap.append(45);
-    heap.append(11);
-    heap.append(13);
-
-    std::cout << heap <<"\n";
-    std::vector<int> list = heap.heapsort();
-    for (int i : list)
+    bool var = true;
+    try 
     {
-        std::cout << i << "-";
+        if (var)
+        {
+            throw ValueError("Invalid value", __FILE__, __LINE__);
+        }
     }
-    std::cout << "\n" << heap;
-  
+    catch (const ValueError& e)
+    {
+        std::cerr << e.what() << "\n";
+    }
+
     return 0;
 }
